@@ -114,8 +114,8 @@ public class Settings implements PersistentStateComponent<Settings> {
         if (this.templateGroupMap == null) {
             this.templateGroupMap = new LinkedHashMap<>();
         }
-        this.templateGroupMap.put(DEFAULT_NAME, loadTemplateGroup(DEFAULT_NAME, "entity.java", "dao.java", "service.java", "serviceImpl.java", "controller.java", "mapper.xml", "debug.json"));
-        this.templateGroupMap.put("MybatisPlus", loadTemplateGroup("MybatisPlus", "entity", "dao", "service", "serviceImpl", "controller"));
+        this.templateGroupMap.put(DEFAULT_NAME, loadTemplateGroup(DEFAULT_NAME, "entity.java", "query.java", "controller.java", "service.java", "serviceImpl.java", "dao.java", "mapper.xml", "debug.json"));
+        this.templateGroupMap.put("MybatisPlus", loadTemplateGroup("MybatisPlus", "entity", "controller", "service", "serviceImpl", "dao"));
 
         //配置默认类型映射
         if (this.typeMapperGroupMap == null) {
@@ -159,6 +159,8 @@ public class Settings implements PersistentStateComponent<Settings> {
         ColumnConfigGroup columnConfigGroup = new ColumnConfigGroup();
         List<ColumnConfig> columnConfigList = new ArrayList<>();
         columnConfigList.add(new ColumnConfig("disable", ColumnConfigType.BOOLEAN));
+        columnConfigList.add(new ColumnConfig("genLikeProp", ColumnConfigType.BOOLEAN));
+        columnConfigList.add(new ColumnConfig("genInProp", ColumnConfigType.BOOLEAN));
         columnConfigGroup.setName(DEFAULT_NAME);
         columnConfigGroup.setElementList(columnConfigList);
         columnConfigGroupMap.put(DEFAULT_NAME, columnConfigGroup);
