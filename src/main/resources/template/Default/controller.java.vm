@@ -1,45 +1,110 @@
-##定义初始变量
-#set($tableName = $tool.append($tableInfo.name, "Controller"))
-##设置回调
-$!callback.setFileName($tool.append($tableName, ".java"))
-$!callback.setSavePath($tool.append($tableInfo.savePath, "/controller"))
-##拿到主键
-#if(!$tableInfo.pkColumn.isEmpty())
-    #set($pk = $tableInfo.pkColumn.get(0))
-#end
+$!init
+$!define
 
-#if($tableInfo.savePackageName)package $!{tableInfo.savePackageName}.#{end}controller;
+##设置文件保存路径
+#save($controllerClassSavePath, $controllerClassName, ".java")
 
-import $!{tableInfo.savePackageName}.entity.$!{tableInfo.name};
-import $!{tableInfo.savePackageName}.service.$!{tableInfo.name}Service;
+##使用宏定义设置包后缀
+#setPackageSuffix($!controllerPackage)
+
+import $!{tableInfo.savePackageName}.$!{entityPackage}.$!{entityClassName};
+import $!{tableInfo.savePackageName}.$!{paramsPackage}.$!{paramsClassName};
+import $!{tableInfo.savePackageName}.$!{servicePackage}.$!{serviceClassName};
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 
 /**
- * $!{tableInfo.comment}($!{tableInfo.name})表控制层
+ * $!{tableInfo.comment}($!{entityClassName})表控制层
  *
  * @author $!author
  * @since $!time.currTime()
  */
 @RestController
-@RequestMapping("$!tool.firstLowerCase($tableInfo.name)")
-public class $!{tableName} {
-    /**
-     * 服务对象
-     */
-    @Resource
-    private $!{tableInfo.name}Service $!tool.firstLowerCase($tableInfo.name)Service;
+@RequestMapping("/$!{tool.firstLowerCase($entityClassName)}")
+public class $!controllerClassName {
+    @Autowired
+    private $!{serviceClassName} $!{tool.firstLowerCase($serviceClassName)};
 
     /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
+     * 新增数据
      */
-    @GetMapping("selectOne")
-    public $!{tableInfo.name} selectOne($!pk.shortType id) {
-        return this.$!{tool.firstLowerCase($tableInfo.name)}Service.queryById(id);
+    @PostMapping("/insert")
+    public $!{entityClassName} insert(@RequestBody $entityClassName ${tool.firstLowerCase($entityClassName)}) {
+        $!{tool.firstLowerCase($entityClassName)} = $!{tool.firstLowerCase($serviceClassName)}.insert($!{tool.firstLowerCase($entityClassName)});
+## TODO 返回类型处理
+        return $!tool.firstLowerCase($entityClassName);
+    }
+
+    /**
+     * 有选择的新增
+     */
+    @PostMapping("/insertSelective")
+    public $!{entityClassName} insertSelective(@RequestBody $entityClassName ${tool.firstLowerCase($entityClassName)}) {
+        $!{tool.firstLowerCase($entityClassName)} = $!{tool.firstLowerCase($serviceClassName)}.insertSelective($!{tool.firstLowerCase($entityClassName)});
+## TODO 返回类型处理
+        return $!tool.firstLowerCase($entityClassName);
+    }
+
+    /**
+     * 根据条件删除数据
+     */
+    @DeleteMapping("/deleteByParams")
+    public int deleteByParams($!{paramsClassName} params) {
+        int affectedtRows = $!{tool.firstLowerCase($serviceClassName)}.deleteByParams(params);
+        return affectedtRows;
+    }
+
+    /**
+     * 修改数据
+     */
+    @PutMapping("/update")
+    public int update(@RequestBody $!{entityClassName} $!{tool.firstLowerCase($entityClassName)}) {
+        int affectedtRows = $!{tool.firstLowerCase($serviceClassName)}.update($!{tool.firstLowerCase($entityClassName)});
+## TODO 返回类型处理
+        return affectedtRows;
+    }
+
+    /**
+     * 有选择的修改
+     */
+    @PutMapping("/updateSelective")
+    public int updateSelective(@RequestBody $!{entityClassName} $!{tool.firstLowerCase($entityClassName)}) {
+        int affectedtRows = $!{tool.firstLowerCase($serviceClassName)}.updateSelective($!{tool.firstLowerCase($entityClassName)});
+## TODO 返回类型处理
+        return affectedtRows;
+    }
+
+    /**
+     * 根据条件修改数据
+     */
+    @PutMapping("/updateByParams")
+    public int updateByParams(@RequestBody $!{entityClassName} $!{tool.firstLowerCase($entityClassName)}, $!paramsClassName params, boolean selective) {
+        int affectedtRows = $!{tool.firstLowerCase($serviceClassName)}.updateByParams($!{tool.firstLowerCase($entityClassName)}, params, selective);
+## TODO 返回类型处理
+        return affectedtRows;
+    }
+
+#if(!$tableInfo.pkColumn.isEmpty())    /**
+     * 根据主键查询单条数据
+     */
+    @GetMapping("/queryByPk")
+    public $entityClassName queryByPk(#foreach($column in $!{tableInfo.pkColumn})@RequestParam("${column.name}") ${tool.getClsNameByFullName($column.type)} ${column.name}#if($velocityHasNext), #end#end) {
+        $entityClassName $!{tool.firstLowerCase($entityClassName)} = $!{tool.firstLowerCase($serviceClassName)}.queryByPk(#foreach($column in $!{tableInfo.pkColumn})${column.name}#if($velocityHasNext), #end#end);
+## TODO 返回类型处理
+        return $!{tool.firstLowerCase($entityClassName)};
+    }
+#end
+
+    /**
+     * 查询多条数据
+     */
+    @GetMapping("/queryListByParams")
+    public List<$!{entityClassName}> queryListByParams($!{paramsClassName} params) {
+## TODO 分页处理
+        List<$!{entityClassName}> $!{tool.firstLowerCase($entityClassName)}List = $!{tool.firstLowerCase($serviceClassName)}.queryListByParams(params);
+## TODO 返回类型处理
+        return $!{tool.firstLowerCase($entityClassName)}List;
     }
 
 }

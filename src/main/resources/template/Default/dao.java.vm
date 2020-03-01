@@ -1,76 +1,63 @@
-##定义初始变量
-#set($tableName = $tool.append($tableInfo.name, "Dao"))
-##设置回调
-$!callback.setFileName($tool.append($tableName, ".java"))
-$!callback.setSavePath($tool.append($tableInfo.savePath, "/dao"))
+$!init
+$!define
 
-##拿到主键
-#if(!$tableInfo.pkColumn.isEmpty())
-    #set($pk = $tableInfo.pkColumn.get(0))
-#end
+##设置文件保存路径
+#save($daoClassSavePath, $daoClassName, ".java")
 
-#if($tableInfo.savePackageName)package $!{tableInfo.savePackageName}.#{end}dao;
+#if($!{tableInfo.savePackageName})package $!{tableInfo.savePackageName}.#end$!{daoPackage};
 
-import $!{tableInfo.savePackageName}.entity.$!{tableInfo.name};
+import $!{tableInfo.savePackageName}.$!entityPackage.$!{entityClassName};
+import $!{tableInfo.savePackageName}.$!paramsPackage.$!{paramsClassName};
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 /**
- * $!{tableInfo.comment}($!{tableInfo.name})表数据库访问层
+ * $!{tableInfo.comment}($!{entityClassName})表数据库访问层
  *
  * @author $!author
  * @since $!time.currTime()
  */
-public interface $!{tableName} {
+@Mapper
+public interface $!{daoClassName} {
 
     /**
-     * 通过ID查询单条数据
-     *
-     * @param $!pk.name 主键
-     * @return 实例对象
+     * 插入数据
      */
-    $!{tableInfo.name} queryById($!pk.shortType $!pk.name);
-
+    int insert($!{entityClassName} $!{tool.firstLowerCase($!{entityClassName})});
     /**
-     * 查询指定行数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
+     * 有选择的插入
      */
-    List<$!{tableInfo.name}> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
-
-
+    int insertSelective($!{entityClassName} $!{tool.firstLowerCase($!{entityClassName})});
     /**
-     * 通过实体作为筛选条件查询
-     *
-     * @param $!tool.firstLowerCase($!{tableInfo.name}) 实例对象
-     * @return 对象列表
+     * 根据条件删除
      */
-    List<$!{tableInfo.name}> queryAll($!{tableInfo.name} $!tool.firstLowerCase($!{tableInfo.name}));
-
+    int deleteByParams($!{paramsClassName} params);
+#if(!$tableInfo.pkColumn.isEmpty())
     /**
-     * 新增数据
-     *
-     * @param $!tool.firstLowerCase($!{tableInfo.name}) 实例对象
-     * @return 影响行数
+     * 根据主键更新
      */
-    int insert($!{tableInfo.name} $!tool.firstLowerCase($!{tableInfo.name}));
-
+    int update($!{entityClassName} $!{tool.firstLowerCase($!{entityClassName})});
+#end
+#if(!$tableInfo.pkColumn.isEmpty())
     /**
-     * 修改数据
-     *
-     * @param $!tool.firstLowerCase($!{tableInfo.name}) 实例对象
-     * @return 影响行数
+     * 根据主键有选择的更新
      */
-    int update($!{tableInfo.name} $!tool.firstLowerCase($!{tableInfo.name}));
-
+    int updateSelective($!{entityClassName} $!{tool.firstLowerCase($!{entityClassName})});
+#end
     /**
-     * 通过主键删除数据
-     *
-     * @param $!pk.name 主键
-     * @return 影响行数
+     * 根据条件进行更新
      */
-    int deleteById($!pk.shortType $!pk.name);
+    int updateByParams(@Param("record") $!{entityClassName} $!tool.firstLowerCase($!{entityClassName}), @Param("params") $!{paramsClassName} params, @Param("selective") boolean selective);
+#if(!$tableInfo.pkColumn.isEmpty())
+    /**
+     * 根据主键查询
+     */
+    $!{entityClassName} queryByPk(#foreach($column in $!{tableInfo.pkColumn})@Param("$!{column.name}") $!{tool.getClsNameByFullName($!{column.type})} $!{column.name}#if($velocityHasNext), #end#end);
+#end
+    /**
+     * 根据条件查询
+     */
+    List<$!{entityClassName}> queryListByParams($!{paramsClassName} params);
 
 }
