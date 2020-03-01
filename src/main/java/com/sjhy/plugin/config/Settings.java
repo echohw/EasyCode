@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -122,19 +123,31 @@ public class Settings implements PersistentStateComponent<Settings> {
         }
         TypeMapperGroup typeMapperGroup = new TypeMapperGroup();
         List<TypeMapper> typeMapperList = new ArrayList<>();
-        typeMapperList.add(new TypeMapper("varchar(\\(\\d+\\))?", "java.lang.String"));
-        typeMapperList.add(new TypeMapper("char(\\(\\d+\\))?", "java.lang.String"));
-        typeMapperList.add(new TypeMapper("text", "java.lang.String"));
-        typeMapperList.add(new TypeMapper("decimal(\\(\\d+\\))?", "java.lang.Double"));
-        typeMapperList.add(new TypeMapper("decimal(\\(\\d+,\\d+\\))?", "java.lang.Double"));
-        typeMapperList.add(new TypeMapper("integer", "java.lang.Integer"));
-        typeMapperList.add(new TypeMapper("int(\\(\\d+\\))?", "java.lang.Integer"));
-        typeMapperList.add(new TypeMapper("int4", "java.lang.Integer"));
-        typeMapperList.add(new TypeMapper("int8", "java.lang.Long"));
-        typeMapperList.add(new TypeMapper("bigint(\\(\\d+\\))?", "java.lang.Long"));
-        typeMapperList.add(new TypeMapper("datetime", "java.util.Date"));
-        typeMapperList.add(new TypeMapper("timestamp", "java.util.Date"));
-        typeMapperList.add(new TypeMapper("boolean", "java.lang.Boolean"));
+        typeMapperList.add(new TypeMapper("tinyint(?:\\([\\d+,]+\\))?", Byte.class.getName()));
+        typeMapperList.add(new TypeMapper("smallint(?:\\([\\d+,]+\\))?", Short.class.getName()));
+        typeMapperList.add(new TypeMapper("mediumint(?:\\([\\d+,]+\\))?", Integer.class.getName()));
+        typeMapperList.add(new TypeMapper("int(?:\\([\\d+,]+\\))?", Integer.class.getName()));
+        typeMapperList.add(new TypeMapper("integer(?:\\([\\d+,]+\\))?", Integer.class.getName()));
+        typeMapperList.add(new TypeMapper("bigint(?:\\([\\d+,]+\\))?", Long.class.getName()));
+        typeMapperList.add(new TypeMapper("float(?:\\([\\d+,]+\\))?", Float.class.getName()));
+        typeMapperList.add(new TypeMapper("double(?:\\([\\d+,]+\\))?", Double.class.getName()));
+        typeMapperList.add(new TypeMapper("decimal(?:\\([\\d+,]+\\))?", BigDecimal.class.getName()));
+        typeMapperList.add(new TypeMapper("year(?:\\([\\d+,]+\\))?", Date.class.getName()));
+        typeMapperList.add(new TypeMapper("time(?:\\([\\d+,]+\\))?", Date.class.getName()));
+        typeMapperList.add(new TypeMapper("date(?:\\([\\d+,]+\\))?", Date.class.getName()));
+        typeMapperList.add(new TypeMapper("timestamp(?:\\([\\d+,]+\\))?", Date.class.getName()));
+        typeMapperList.add(new TypeMapper("datetime(?:\\([\\d+,]+\\))?", Date.class.getName()));
+        typeMapperList.add(new TypeMapper("char(?:\\([\\d+,]+\\))?", String.class.getName()));
+        typeMapperList.add(new TypeMapper("varchar(?:\\([\\d+,]+\\))?", String.class.getName()));
+        typeMapperList.add(new TypeMapper("tinytext(?:\\([\\d+,]+\\))?", String.class.getName()));
+        typeMapperList.add(new TypeMapper("text(?:\\([\\d+,]+\\))?", String.class.getName()));
+        typeMapperList.add(new TypeMapper("mediumtext(?:\\([\\d+,]+\\))?", String.class.getName()));
+        typeMapperList.add(new TypeMapper("longtext(?:\\([\\d+,]+\\))?", String.class.getName()));
+        typeMapperList.add(new TypeMapper("tinyblob(?:\\([\\d+,]+\\))?", "byte[]"));
+        typeMapperList.add(new TypeMapper("blob(?:\\([\\d+,]+\\))?", "byte[]"));
+        typeMapperList.add(new TypeMapper("mediumblob(?:\\([\\d+,]+\\))?", "byte[]"));
+        typeMapperList.add(new TypeMapper("longblob(?:\\([\\d+,]+\\))?", "byte[]"));
+        typeMapperList.add(new TypeMapper("boolean(?:\\([\\d+,]+\\))?", Boolean.class.getName()));
         typeMapperGroup.setName(DEFAULT_NAME);
         typeMapperGroup.setElementList(typeMapperList);
         typeMapperGroupMap.put(DEFAULT_NAME, typeMapperGroup);
