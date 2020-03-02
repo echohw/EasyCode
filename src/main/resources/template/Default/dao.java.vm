@@ -30,6 +30,10 @@ public interface $!{daoClassName} {
      */
     int insertSelective($!{entityClassName} $!{tool.firstLowerCase($!{entityClassName})});
     /**
+     * 批量插入
+     */
+    int insertBatch(List<$!{entityClassName}> $!{tool.firstLowerCase($!{entityClassName})}List);
+    /**
      * 根据条件删除
      */
     int deleteByParams($!{paramsClassName} params);

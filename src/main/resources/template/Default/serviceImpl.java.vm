@@ -43,6 +43,13 @@ public class $!{serviceImplClassName} implements $!{serviceClassName} {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    public int insertBatch(List<$!{entityClassName}> $!tool.firstLowerCase($!{entityClassName})List) {
+        int affectedtRows = $!{tool.firstLowerCase($!{daoClassName})}.insertBatch($!tool.firstLowerCase($!{entityClassName})List);
+        return affectedtRows;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteByParams($!{paramsClassName} params) {
         int affectedtRows = $!{tool.firstLowerCase($!{daoClassName})}.deleteByParams(params);
         return affectedtRows;

@@ -31,6 +31,12 @@ public interface $!serviceClassName {
     $!{entityClassName} insertSelective($!{entityClassName} $!tool.firstLowerCase($!{entityClassName}));
 
     /**
+     * 批量新增
+     * @return 受影响的行数
+     */
+    int insertBatch(List<$!{entityClassName}> $!tool.firstLowerCase($!{entityClassName})List);
+
+    /**
      * 根据条件删除数据
      * @return 受影响的行数
      */

@@ -74,6 +74,19 @@ $!callback.setFileName($tool.append($daoClassName, ".xml"))
       </trim>
     </insert>
 
+    <!--批量新增-->
+    <insert id="insertBatch" parameterType="java.util.List">
+      insert into $!{tableInfo.obj.name}
+      <trim prefix="(" suffix=")" suffixOverrides="">
+#allSqlColumn()
+
+      </trim>
+      values
+      <foreach collection="list" index="index" item="item" open="" close="" separator=",">
+        (#foreach($column in $tableInfo.fullColumn)#{item.$!{column.name},jdbcType=$!{column.ext.jdbcType}}#if($velocityHasNext), #end#end)
+      </foreach>
+    </insert>
+
     <!--根据条件删除-->
     <delete id="deleteByParams" parameterType="$!{tableInfo.savePackageName}.$!{paramsPackage}.$!{paramsClassName}">
       delete from $!{tableInfo.obj.name}

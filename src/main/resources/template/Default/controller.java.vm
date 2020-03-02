@@ -47,6 +47,16 @@ public class $!controllerClassName {
     }
 
     /**
+     * 批量新增
+     */
+    @PostMapping("/insertBatch")
+    public int insertBatch(@RequestBody List<$entityClassName> ${tool.firstLowerCase($entityClassName)}List) {
+        int affectedtRows = $!{tool.firstLowerCase($serviceClassName)}.insertBatch($!{tool.firstLowerCase($entityClassName)}List);
+## TODO 返回类型处理
+        return affectedtRows;
+    }
+
+    /**
      * 根据条件删除数据
      */
     @DeleteMapping("/deleteByParams")
