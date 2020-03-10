@@ -31,9 +31,7 @@ public class $!controllerClassName {
      */
     @PostMapping("/insert")
     public $!{entityClassName} insert(@RequestBody $entityClassName ${tool.firstLowerCase($entityClassName)}) {
-        $!{tool.firstLowerCase($entityClassName)} = $!{tool.firstLowerCase($serviceClassName)}.insert($!{tool.firstLowerCase($entityClassName)});
-## TODO 返回类型处理
-        return $!tool.firstLowerCase($entityClassName);
+        return $!{tool.firstLowerCase($serviceClassName)}.insert($!{tool.firstLowerCase($entityClassName)});
     }
 
     /**
@@ -41,9 +39,7 @@ public class $!controllerClassName {
      */
     @PostMapping("/insertSelective")
     public $!{entityClassName} insertSelective(@RequestBody $entityClassName ${tool.firstLowerCase($entityClassName)}) {
-        $!{tool.firstLowerCase($entityClassName)} = $!{tool.firstLowerCase($serviceClassName)}.insertSelective($!{tool.firstLowerCase($entityClassName)});
-## TODO 返回类型处理
-        return $!tool.firstLowerCase($entityClassName);
+        return $!{tool.firstLowerCase($serviceClassName)}.insertSelective($!{tool.firstLowerCase($entityClassName)});
     }
 
     /**
@@ -51,9 +47,7 @@ public class $!controllerClassName {
      */
     @PostMapping("/insertBatch")
     public int insertBatch(@RequestBody List<$entityClassName> ${tool.firstLowerCase($entityClassName)}List) {
-        int affectedtRows = $!{tool.firstLowerCase($serviceClassName)}.insertBatch($!{tool.firstLowerCase($entityClassName)}List);
-## TODO 返回类型处理
-        return affectedtRows;
+        return $!{tool.firstLowerCase($serviceClassName)}.insertBatch($!{tool.firstLowerCase($entityClassName)}List);
     }
 
     /**
@@ -61,8 +55,7 @@ public class $!controllerClassName {
      */
     @DeleteMapping("/deleteByParams")
     public int deleteByParams($!{paramsClassName} params) {
-        int affectedtRows = $!{tool.firstLowerCase($serviceClassName)}.deleteByParams(params);
-        return affectedtRows;
+        return $!{tool.firstLowerCase($serviceClassName)}.deleteByParams(params);
     }
 
     /**
@@ -70,9 +63,7 @@ public class $!controllerClassName {
      */
     @PutMapping("/update")
     public int update(@RequestBody $!{entityClassName} $!{tool.firstLowerCase($entityClassName)}) {
-        int affectedtRows = $!{tool.firstLowerCase($serviceClassName)}.update($!{tool.firstLowerCase($entityClassName)});
-## TODO 返回类型处理
-        return affectedtRows;
+        return $!{tool.firstLowerCase($serviceClassName)}.update($!{tool.firstLowerCase($entityClassName)});
     }
 
     /**
@@ -80,9 +71,7 @@ public class $!controllerClassName {
      */
     @PutMapping("/updateSelective")
     public int updateSelective(@RequestBody $!{entityClassName} $!{tool.firstLowerCase($entityClassName)}) {
-        int affectedtRows = $!{tool.firstLowerCase($serviceClassName)}.updateSelective($!{tool.firstLowerCase($entityClassName)});
-## TODO 返回类型处理
-        return affectedtRows;
+        return $!{tool.firstLowerCase($serviceClassName)}.updateSelective($!{tool.firstLowerCase($entityClassName)});
     }
 
     /**
@@ -90,9 +79,7 @@ public class $!controllerClassName {
      */
     @PutMapping("/updateByParams")
     public int updateByParams(@RequestBody $!{entityClassName} $!{tool.firstLowerCase($entityClassName)}, $!paramsClassName params, boolean selective) {
-        int affectedtRows = $!{tool.firstLowerCase($serviceClassName)}.updateByParams($!{tool.firstLowerCase($entityClassName)}, params, selective);
-## TODO 返回类型处理
-        return affectedtRows;
+        return $!{tool.firstLowerCase($serviceClassName)}.updateByParams($!{tool.firstLowerCase($entityClassName)}, params, selective);
     }
 
 #if(!$tableInfo.pkColumn.isEmpty())    /**
@@ -100,9 +87,7 @@ public class $!controllerClassName {
      */
     @GetMapping("/queryByPk")
     public $entityClassName queryByPk(#foreach($column in $!{tableInfo.pkColumn})@RequestParam("${column.name}") ${tool.getClsNameByFullName($column.type)} ${column.name}#if($velocityHasNext), #end#end) {
-        $entityClassName $!{tool.firstLowerCase($entityClassName)} = $!{tool.firstLowerCase($serviceClassName)}.queryByPk(#foreach($column in $!{tableInfo.pkColumn})${column.name}#if($velocityHasNext), #end#end);
-## TODO 返回类型处理
-        return $!{tool.firstLowerCase($entityClassName)};
+        return $!{tool.firstLowerCase($serviceClassName)}.queryByPk(#foreach($column in $!{tableInfo.pkColumn})${column.name}#if($velocityHasNext), #end#end);
     }
 #end
 
@@ -111,10 +96,7 @@ public class $!controllerClassName {
      */
     @GetMapping("/queryListByParams")
     public List<$!{entityClassName}> queryListByParams($!{paramsClassName} params) {
-## TODO 分页处理
-        List<$!{entityClassName}> $!{tool.firstLowerCase($entityClassName)}List = $!{tool.firstLowerCase($serviceClassName)}.queryListByParams(params);
-## TODO 返回类型处理
-        return $!{tool.firstLowerCase($entityClassName)}List;
+        return $!{tool.firstLowerCase($serviceClassName)}.queryListByParams(params);
     }
 
 }
