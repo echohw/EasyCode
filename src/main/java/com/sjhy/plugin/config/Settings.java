@@ -137,6 +137,7 @@ public class Settings implements PersistentStateComponent<Settings> {
         typeMapperList.add(new TypeMapper("date(?:\\([\\d+,]+\\))?", Date.class.getName()));
         typeMapperList.add(new TypeMapper("timestamp(?:\\([\\d+,]+\\))?", Date.class.getName()));
         typeMapperList.add(new TypeMapper("datetime(?:\\([\\d+,]+\\))?", Date.class.getName()));
+        typeMapperList.add(new TypeMapper("char(?:\\(1\\))?", Character.class.getName()));
         typeMapperList.add(new TypeMapper("char(?:\\([\\d+,]+\\))?", String.class.getName()));
         typeMapperList.add(new TypeMapper("varchar(?:\\([\\d+,]+\\))?", String.class.getName()));
         typeMapperList.add(new TypeMapper("tinytext(?:\\([\\d+,]+\\))?", String.class.getName()));
