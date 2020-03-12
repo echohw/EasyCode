@@ -9,6 +9,16 @@
 ## 定义表前缀列表
 #set($tablePrefixs = $tool.newHashSet("t_"))
 
+## 去掉表的t_前缀
+#if($!trimTablePrefix)
+    #foreach($tablePrefix in $!tablePrefixs)
+        #if($tableInfo.obj.name.startsWith($tablePrefix))
+            $tableInfo.setName($tool.getClassName($tableInfo.obj.name.replaceFirst("^${tablePrefix}", "")))
+            #break
+        #end
+    #end
+#end
+
 #### 定义包名
 #set($controllerPackage = "controller")
 #set($servicePackage = "service")
@@ -43,16 +53,6 @@
 #set($excludeFields = $tool.newHashSet())
 
 ##########################################
-
-## 去掉表的t_前缀
-#if($!trimTablePrefix)
-    #foreach($tablePrefix in $!tablePrefixs)
-        #if($tableInfo.obj.name.startsWith($tablePrefix))
-            $tableInfo.setName($tool.getClassName($tableInfo.obj.name.replaceFirst("^${tablePrefix}", "")))
-            #break
-        #end
-    #end
-#end
 
 ## 参考阿里巴巴开发手册，POJO 类中布尔类型的变量，都不要加 is 前缀，否则部分框架解析会引起序列化错误
 #foreach($column in $tableInfo.fullColumn)
