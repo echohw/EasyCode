@@ -123,15 +123,15 @@ public class Settings implements PersistentStateComponent<Settings> {
         }
         TypeMapperGroup typeMapperGroup = new TypeMapperGroup();
         List<TypeMapper> typeMapperList = new ArrayList<>();
-        typeMapperList.add(new TypeMapper("tinyint(?:\\([\\d+,]+\\))?", Byte.class.getName()));
-        typeMapperList.add(new TypeMapper("smallint(?:\\([\\d+,]+\\))?", Short.class.getName()));
-        typeMapperList.add(new TypeMapper("mediumint(?:\\([\\d+,]+\\))?", Integer.class.getName()));
-        typeMapperList.add(new TypeMapper("int(?:\\([\\d+,]+\\))?", Integer.class.getName()));
-        typeMapperList.add(new TypeMapper("integer(?:\\([\\d+,]+\\))?", Integer.class.getName()));
-        typeMapperList.add(new TypeMapper("bigint(?:\\([\\d+,]+\\))?", Long.class.getName()));
-        typeMapperList.add(new TypeMapper("float(?:\\([\\d+,]+\\))?", Float.class.getName()));
-        typeMapperList.add(new TypeMapper("double(?:\\([\\d+,]+\\))?", Double.class.getName()));
-        typeMapperList.add(new TypeMapper("decimal(?:\\([\\d+,]+\\))?", BigDecimal.class.getName()));
+        typeMapperList.add(new TypeMapper("tinyint(?:\\([\\d+,]+\\))?(?: unsigned)?", Byte.class.getName()));
+        typeMapperList.add(new TypeMapper("smallint(?:\\([\\d+,]+\\))?(?: unsigned)?", Short.class.getName()));
+        typeMapperList.add(new TypeMapper("mediumint(?:\\([\\d+,]+\\))?(?: unsigned)?", Integer.class.getName()));
+        typeMapperList.add(new TypeMapper("int(?:\\([\\d+,]+\\))?(?: unsigned)?", Integer.class.getName()));
+        typeMapperList.add(new TypeMapper("integer(?:\\([\\d+,]+\\))?(?: unsigned)?", Integer.class.getName()));
+        typeMapperList.add(new TypeMapper("bigint(?:\\([\\d+,]+\\))?(?: unsigned)?", Long.class.getName()));
+        typeMapperList.add(new TypeMapper("float(?:\\([\\d+,]+\\))?(?: unsigned)?", Float.class.getName()));
+        typeMapperList.add(new TypeMapper("double(?:\\([\\d+,]+\\))?(?: unsigned)?", Double.class.getName()));
+        typeMapperList.add(new TypeMapper("decimal(?:\\([\\d+,]+\\))?(?: unsigned)?", BigDecimal.class.getName()));
         typeMapperList.add(new TypeMapper("year(?:\\([\\d+,]+\\))?", Date.class.getName()));
         typeMapperList.add(new TypeMapper("time(?:\\([\\d+,]+\\))?", Date.class.getName()));
         typeMapperList.add(new TypeMapper("date(?:\\([\\d+,]+\\))?", Date.class.getName()));
