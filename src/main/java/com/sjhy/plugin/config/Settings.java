@@ -149,6 +149,7 @@ public class Settings implements PersistentStateComponent<Settings> {
         typeMapperList.add(new TypeMapper("mediumblob(?:\\([\\d+,]+\\))?", "byte[]"));
         typeMapperList.add(new TypeMapper("longblob(?:\\([\\d+,]+\\))?", "byte[]"));
         typeMapperList.add(new TypeMapper("boolean(?:\\([\\d+,]+\\))?", Boolean.class.getName()));
+        typeMapperList.add(new TypeMapper("(?:.*zerofill)?", String.class.getName()));
         typeMapperGroup.setName(DEFAULT_NAME);
         typeMapperGroup.setElementList(typeMapperList);
         typeMapperGroupMap.put(DEFAULT_NAME, typeMapperGroup);
